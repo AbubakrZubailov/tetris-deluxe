@@ -5,7 +5,7 @@
 
 ## Скачать игру для Windows
 
-На странице [последнего релиза](https://github.com/AbubakrZubailov/tetris-deluxe/releases/latest) скачайте TetrisDeluxe.exe и откройте файл. Сборка предназначена для 64-разрядной Windows и включает Python и Pygame. Настройки и рекорды хранятся в папке `%LOCALAPPDATA%\Tetris Deluxe`.
+На странице [последнего релиза](../../releases/latest) скачайте TetrisDeluxe.exe и откройте файл. Сборка предназначена для 64-разрядной Windows и включает Python и Pygame. Настройки и рекорды хранятся в папке `%LOCALAPPDATA%\Tetris Deluxe`.
 
 ## Запуск из исходников в Windows
 
