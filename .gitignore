@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.venv/
+tetris_settings.json
+tetris_deluxe_data.json
+highscore.json
