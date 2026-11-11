@@ -4,7 +4,9 @@ from __future__ import annotations
 import copy
 import json
 import math
+import os
 import random
+import sys
 from pathlib import Path
 
 COLS, ROWS = 12, 24  # The original game's board dimensions.
@@ -291,7 +293,12 @@ def _natural_int(value, default=0):
 class Store:
     """Versioned progress; reads but never modifies the original highscore.json."""
     def __init__(self, folder=None):
-        self.folder = Path(folder) if folder is not None else Path(__file__).resolve().parent
+        if folder is None:
+            folder = Path(__file__).resolve().parent
+            if getattr(sys, 'frozen', False):
+                local_app_data = Path(os.environ.get('LOCALAPPDATA') or Path.home())
+                folder = local_app_data / 'Tetris Deluxe'
+        self.folder = Path(folder)
         self.progress_path = self.folder / 'tetris_deluxe_data.json'
         self.settings_path = self.folder / 'tetris_settings.json'
         old = _dict_from(self.folder / 'highscore.json')

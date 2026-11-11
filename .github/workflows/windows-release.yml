@@ -1,0 +1,51 @@
+name: Windows build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/windows-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pyinstaller
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+      - name: Build Windows executable
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name TetrisDeluxe tetris.py
+      - name: Check that the executable opens a window
+        shell: pwsh
+        run: |
+          $game = Start-Process ./dist/TetrisDeluxe.exe -PassThru
+          try {
+            $deadline = (Get-Date).AddSeconds(45)
+            do {
+              Start-Sleep -Seconds 1
+              $window = Get-Process TetrisDeluxe -ErrorAction SilentlyContinue |
+                Where-Object { $_.MainWindowTitle -eq 'Tetris Deluxe' }
+              if ($window) { break }
+              if ($game.HasExited) { throw "Game exited before opening a window." }
+            } while ((Get-Date) -lt $deadline)
+            if (-not $window) { throw "Game window did not open within 45 seconds." }
+          } finally {
+            Get-Process TetrisDeluxe -ErrorAction SilentlyContinue |
+              Stop-Process -Force -ErrorAction SilentlyContinue
+          }
+      - name: Save Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: TetrisDeluxe-Windows-x64
+          path: dist/TetrisDeluxe.exe
+          if-no-files-found: error
