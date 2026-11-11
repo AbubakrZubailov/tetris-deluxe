@@ -3,7 +3,11 @@
 Полноценная обновлённая игра Tetris для **Python 3.10+ и Pygame 2.5+**.
 Работает локально, без сервера и интернета. Оригинальные картинки и звуки не нужны: интерфейс, частицы, звуковые эффекты и мелодия создаются программно.
 
-## Запуск в Windows
+## Скачать игру для Windows
+
+На странице [последнего релиза](https://github.com/AbubakrZubailov/tetris-deluxe/releases/latest) скачайте TetrisDeluxe.exe и откройте файл. Сборка предназначена для 64-разрядной Windows и включает Python и Pygame. Настройки и рекорды хранятся в папке `%LOCALAPPDATA%\Tetris Deluxe`.
+
+## Запуск из исходников в Windows
 
 1. Установите Python 3 с https://www.python.org/downloads/ (при установке отметьте **Add Python to PATH**; рекомендована версия Python с доступным pygame).
 2. Скачайте или клонируйте репозиторий в обычную папку, например `C:\Games\Tetris_Deluxe`.
